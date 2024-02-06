@@ -46,9 +46,7 @@ public class AzureBucketClient implements BucketClient {
 
     private BlobAsyncClient getClient(String name) {
 
-        var connectionString = "DefaultEndpointsProtocol=https;AccountName=8v9k7h5sxr4wnyk68id441l;" +
-                "   AccountKey=QL2Qq5p9Ok4t15QByWvL/jvv2hcC2gdQ0LLmtoTaXPGX8RykH3vN5QniPqT1SXIayosBlUWHDLmEUns4tztk8g==;" +
-                "   EndpointSuffix=core.windows.net";
+        var connectionString = "";
 
         return new BlobClientBuilder()
                 .blobName(name)
