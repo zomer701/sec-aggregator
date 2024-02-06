@@ -22,7 +22,8 @@ public class FileController {
 
     @PostMapping("/upload")
     public Mono<Void> uploadFile(@RequestPart("file") Mono<FilePart> filePartMono) {
-        return storageService.save(filePartMono).map(
-                (filename) -> ResponseEntity.ok()).then();
+        return storageService.save(filePartMono)
+                .then(Mono.fromCallable(ResponseEntity::ok))
+                .then();
     }
 }

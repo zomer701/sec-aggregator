@@ -5,7 +5,7 @@ import org.springframework.http.codec.multipart.FilePart;
 import reactor.core.publisher.Mono;
 
 public interface FileStorageService {
-    Mono<String> save(Mono<FilePart> filePartMono);
+    Mono<Void> save(Mono<FilePart> filePartMono);
 
     Mono<FileData> getStatus(String filename);
 }
