@@ -1,3 +1,30 @@
+
 spring:
   webflux:
     base-path : "/inbound"
+  kafka:
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_BROKERS:localhost:9092}
+    consumer:
+      auto-offset-reset: earliest
+      enable-auto-commit: true
+      properties:
+        max.partition.fetch.bytes: 10485760
+        spring:
+          json:
+            use:
+              type:
+                headers: false
+            value:
+              default:
+                type: io.scommerce.core.inbound.aggregator.dto.CommandDTO
+      group-id: inbound
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+topic:
+  name:
+    command: command_request
+server:
+  port: 8081

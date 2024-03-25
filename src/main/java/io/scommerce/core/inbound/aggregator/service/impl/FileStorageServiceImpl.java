@@ -23,9 +23,10 @@ public class FileStorageServiceImpl implements FileStorageService {
     private BucketClient azureBucketClient;
 
     @Override
-    public Mono<Void> save(Mono<FilePart> filePartMono) {
+    public Mono<String> save(Mono<FilePart> filePartMono) {
         return filePartMono.doOnNext(fp -> log.info("Receiving File: " + fp.filename()))
-                .flatMap(filePart -> azureBucketClient.upload(filePart));
+                .flatMap(filePart -> azureBucketClient.upload(filePart))
+                .then(filePartMono.map(FilePart::filename));
     }
 
     @Override
