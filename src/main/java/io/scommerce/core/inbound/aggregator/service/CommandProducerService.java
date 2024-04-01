@@ -1,6 +1,6 @@
 package io.scommerce.core.inbound.aggregator.service;
 
-import io.scommerce.core.inbound.aggregator.dto.CommandDTO;
+import io.scommerce.core.inbound.shared.dto.CommandDTO;
 import reactor.core.publisher.Mono;
 import reactor.kafka.sender.SenderResult;
 

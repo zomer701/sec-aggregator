@@ -3,6 +3,7 @@ package io.scommerce.core.inbound.aggregator.service.impl;
 import io.scommerce.core.inbound.aggregator.bucket.BucketClient;
 import io.scommerce.core.inbound.aggregator.data.FileData;
 import io.scommerce.core.inbound.aggregator.service.FileStorageService;
+import io.scommerce.core.inbound.shared.constants.Constants;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +24,9 @@ public class FileStorageServiceImpl implements FileStorageService {
     private BucketClient azureBucketClient;
 
     @Override
-    public Mono<String> save(Mono<FilePart> filePartMono) {
-        return filePartMono.doOnNext(fp -> log.info("Receiving File: " + fp.filename()))
-                .flatMap(filePart -> azureBucketClient.upload(filePart))
+    public Mono<String> save(Mono<FilePart> filePartMono, Constants.ProcessorChannels channel) {
+        return filePartMono.doOnNext(fp -> log.info(String.format("Receiving File: %s | channel %s", fp.filename(), channel)))
+                .flatMap(filePart -> azureBucketClient.upload(filePart, channel))
                 .then(filePartMono.map(FilePart::filename));
     }
 

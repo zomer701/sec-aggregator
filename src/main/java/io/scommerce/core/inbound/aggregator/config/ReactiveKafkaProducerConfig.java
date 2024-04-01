@@ -1,6 +1,6 @@
 package io.scommerce.core.inbound.aggregator.config;
 
-import io.scommerce.core.inbound.aggregator.dto.CommandDTO;
+import io.scommerce.core.inbound.shared.dto.CommandDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.kafka.KafkaProperties;

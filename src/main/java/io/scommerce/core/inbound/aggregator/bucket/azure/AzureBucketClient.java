@@ -4,6 +4,7 @@ import com.azure.storage.blob.BlobAsyncClient;
 import com.azure.storage.blob.BlobClientBuilder;
 import com.azure.storage.blob.models.ParallelTransferOptions;
 import io.scommerce.core.inbound.aggregator.bucket.BucketClient;
+import io.scommerce.core.inbound.shared.constants.Constants;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.codec.multipart.FilePart;
@@ -12,6 +13,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.nio.ByteBuffer;
+
+import static io.scommerce.core.inbound.shared.util.UrlsUtil.azureBucketUrl;
 
 @Slf4j
 @Service
@@ -22,15 +25,15 @@ public class AzureBucketClient implements BucketClient {
     private int maxConcurrency = 4;
 
     @Override
-    public Mono<Void> upload(FilePart file) {
+    public Mono<Void> upload(FilePart file,  Constants.ProcessorChannels channel) {
         ParallelTransferOptions parallelTransferOptions = new ParallelTransferOptions()
                 .setBlockSizeLong(blockSize).setMaxConcurrency(maxConcurrency)
-                .setProgressListener(bytesTransferred -> System.out.println("uploaded:" + bytesTransferred));
+                .setProgressListener(bytesTransferred -> log.info("uploaded:" + bytesTransferred));
 
         Flux<ByteBuffer> byteBuffers = file
                 .content()
                 .flatMapSequential(dataBuffer -> Flux.fromIterable(dataBuffer::readableByteBuffers));
-        return getClient(file.filename()).upload(byteBuffers,
+        return getClient(azureBucketUrl(channel.name(), file.filename())).upload(byteBuffers,
                         parallelTransferOptions, true).doOnNext(response ->
                 log.info(response.getETag()))
                 .then();

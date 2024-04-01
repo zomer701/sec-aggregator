@@ -1,6 +1,6 @@
 package io.scommerce.core.inbound.aggregator.service.impl;
 
-import io.scommerce.core.inbound.aggregator.dto.CommandDTO;
+import io.scommerce.core.inbound.shared.dto.CommandDTO;
 import io.scommerce.core.inbound.aggregator.service.CommandProducerService;
 import jakarta.annotation.Resource;
 import lombok.extern.slf4j.Slf4j;

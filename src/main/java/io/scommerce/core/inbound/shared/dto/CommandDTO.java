@@ -1,4 +1,4 @@
-package io.scommerce.core.inbound.aggregator.dto;
+package io.scommerce.core.inbound.shared.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -12,4 +12,6 @@ import lombok.NoArgsConstructor;
 public class CommandDTO {
     private Long pk;
     private String name;
+    private String user;
+    private String channel;
 }

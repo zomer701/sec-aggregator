@@ -27,4 +27,4 @@ topic:
   name:
     command: command_request
 server:
-  port: 8081
+  port: 8086
