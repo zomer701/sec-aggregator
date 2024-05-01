@@ -5,6 +5,7 @@ import io.scommerce.core.inbound.aggregator.service.CommandProducerService;
 import io.scommerce.core.inbound.aggregator.service.FileStorageService;
 import io.scommerce.core.inbound.shared.dto.CommandDTO;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.codec.multipart.FilePart;
@@ -18,6 +19,7 @@ import static io.scommerce.core.inbound.shared.constants.Constants.ProcessorChan
 @RestController
 @RequestMapping("/v1/{channel}/")
 @AllArgsConstructor
+@Slf4j
 public class FileController {
 
     private final FileStorageService storageService;
@@ -26,7 +28,9 @@ public class FileController {
     @PostMapping("/upload")
     public Mono<ResponseEntity<Void>> uploadFile(@RequestPart("file") Mono<FilePart> filePartMono,
                                                  @PathVariable("channel") ProcessorChannels channel) {
+
         //TODO channel validation
+        log.info("import");
         return storageService.save(filePartMono, channel)
                 .flatMap(file -> commandProducerService.send(CommandDTO.builder()
                         .pk(System.currentTimeMillis())

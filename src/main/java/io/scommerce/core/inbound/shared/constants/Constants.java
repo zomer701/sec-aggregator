@@ -8,5 +8,7 @@ public class Constants {
     public enum ProcessorChannels {
         NATIVE_FACEBOOK_REQUIRED_PRODUCTS,
         NATIVE_FACEBOOK_US_CHECKOUT_PRODUCTS,
+
+        NATIVE_FACEBOOK_INDIA_CHECKOUT_PRODUCTS
     }
 }
