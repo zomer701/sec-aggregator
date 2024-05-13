@@ -1,6 +1,10 @@
 
 spring:
+  codec:
+    max-in-memory-size: 100MB
   webflux:
+    multipart:
+      max-in-memory-size: 100MB
     base-path : "/inbound"
   kafka:
     bootstrap-servers: ${KAFKA_BOOTSTRAP_BROKERS:localhost:9092}
@@ -27,4 +31,4 @@ topic:
   name:
     command: command_request
 server:
-  port: 8089
+  port: 8091
