@@ -1,4 +1,7 @@
 spring:
+  threads:
+    virtual:
+      enabled: true
   codec:
     max-in-memory-size: 100MB
   webflux:
