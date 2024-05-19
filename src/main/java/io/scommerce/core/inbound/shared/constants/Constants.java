@@ -11,4 +11,8 @@ public class Constants {
 
         NATIVE_FACEBOOK_INDIA_CHECKOUT_PRODUCTS
     }
+
+    public enum Platform {
+        FACEBOOK
+    }
 }

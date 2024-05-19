@@ -27,3 +27,16 @@ services:
       KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
       KAFKA_LISTENERS: PLAINTEXT://0.0.0.0:9092
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+  cockroach:
+    image: cockroachdb/cockroach:latest-v23.2
+    volumes:
+      - ./cockroach1:/cockroach/cockroach-data
+    environment:
+      - COCKROACH_ROOT_PASSWORD=asdfasdf
+      - COCKROACH_DATABASE=develop
+      - COCKROACH_USER=developer
+      - COCKROACH_PASSWORD=asdfasdf
+    command: start-single-node --insecure --accept-sql-without-tls
+    ports:
+      - "26257:26257"
+      - "8080:8080"
