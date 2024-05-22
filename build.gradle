@@ -31,9 +31,7 @@ repositories {
 }
 
 dependencies {
-	implementation('org.springframework.boot:spring-boot-starter-webflux') {
-		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-	}
+	implementation 'org.springframework.boot:spring-boot-starter-webflux'
 	implementation 'org.springdoc:springdoc-openapi-starter-webflux-ui:2.5.0'
 	implementation 'org.springframework.kafka:spring-kafka'
 	implementation 'io.projectreactor.kafka:reactor-kafka:1.3.23'
