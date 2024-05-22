@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -17,6 +18,7 @@ import java.util.UUID;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/unit")
+@Validated
 public class UnitController {
 
     private UnitFacade unitFacade;
@@ -41,7 +43,7 @@ public class UnitController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Mono<UnitResponse> create(@RequestBody UnitRequest unitRequest) {
+    public Mono<UnitResponse> create(@RequestBody @Valid UnitRequest unitRequest) {
         return unitFacade.create(unitRequest);
     }
 
