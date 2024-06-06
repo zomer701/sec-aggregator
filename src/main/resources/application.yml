@@ -1,53 +1,53 @@
 spring:
-  sql:
-    init:
-      mode: always
-  r2dbc:
-    url: r2dbc:postgresql://localhost:26257/core?sslmode=disable
-    pool:
-      initial-size: 50
-      max-size: 100
-      enabled: true
-      validation-query: SELECT 1
-    username: root
-  logging:
-    level:
-      org.springframework.data.r2dbc: Debug
+#  sql:
+#    init:
+#      mode: never
+#  r2dbc:
+#    url: r2dbc:postgresql://localhost:26257/core?sslmode=disable
+#    pool:
+#      initial-size: 50
+#      max-size: 100
+#      enabled: true
+#      validation-query: SELECT 1
+#    username: root
 #  threads:
 #    virtual:
 #      enabled: true
   codec:
-    max-in-memory-size: 100MB
+    max-in-memory-size: 1000MB
   webflux:
     multipart:
-      max-in-memory-size: 100MB
-  kafka:
-    bootstrap-servers: ${KAFKA_BOOTSTRAP_BROKERS:localhost:9092}
-    consumer:
-      auto-offset-reset: earliest
-      enable-auto-commit: true
-      properties:
-        max.partition.fetch.bytes: 10485760
-        spring:
-          json:
-            use:
-              type:
-                headers: false
-            value:
-              default:
-                type: io.scommerce.core.inbound.aggregator.dto.CommandDTO
-      group-id: inbound
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-    producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      max-in-memory-size: 1000MB
+#  kafka:
+#    bootstrap-servers: ${KAFKA_BOOTSTRAP_BROKERS:localhost:9092}
+#    consumer:
+#      auto-offset-reset: earliest
+#      enable-auto-commit: true
+#      properties:
+#        max.partition.fetch.bytes: 10485760
+#        spring:
+#          json:
+#            use:
+#              type:
+#                headers: false
+#            value:
+#              default:
+#                type: io.scommerce.core.inbound.aggregator.dto.CommandDTO
+#      group-id: inbound
+#      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+#      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+#    producer:
+#      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+#      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
 #  jpa:
 #    generate-ddl: true
 #    hibernate:
 #      ddl-auto: create
-topic:
-  name:
-    command: command_request
+#topic:
+#  name:
+#    command: command_request
 server:
   port: 8091
+biqquery:
+  auth:
+    file: /Users/mykhailomarkhain/work/social-commerce/e5p/google_bucket/marketcom-bi-cefec86e13f3.json

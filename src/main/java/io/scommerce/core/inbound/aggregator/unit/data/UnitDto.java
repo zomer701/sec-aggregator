@@ -1,4 +1,4 @@
-package io.scommerce.core.inbound.aggregator.unit.data;
-
-public record UnitDto(String email) {
-}
+//package io.scommerce.core.inbound.aggregator.unit.data;
+//
+//public record UnitDto(String email) {
+//}

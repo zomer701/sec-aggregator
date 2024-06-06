@@ -5,7 +5,6 @@ import io.scommerce.core.inbound.shared.exception.InvalidInputException;
 import io.scommerce.core.inbound.shared.exception.NotFoundException;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.server.reactive.ServerHttpRequest;
