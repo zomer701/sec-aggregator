@@ -9,6 +9,7 @@ import io.scommerce.core.inbound.aggregator.clients.biqquery.BigQueryClient;
 import io.scommerce.core.inbound.aggregator.products.data.PageableData;
 import io.scommerce.core.inbound.aggregator.products.data.Product;
 import io.scommerce.core.inbound.aggregator.products.data.ProductPageableData;
+import io.scommerce.core.inbound.aggregator.products.data.StockPageableData;
 import lombok.AllArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -57,7 +58,7 @@ public class ProductsFacade {
             boolean number = NumberUtils.isParsable(search);
 
             var queryForData = number ? String.format("AND t.id = %s", search)
-                    : String.format("AND (EXISTS (SELECT * FROM UNNEST(stores.e5p.categories) AS x WHERE x.slug = '%s' LIMIT 1 ))", search);
+                    : String.format("AND (EXISTS (SELECT * FROM UNNEST(stores.e5p.categories) AS x WHERE x.slug  =  '%s' LIMIT 1 ))", search);
 
             query = String.format(query + " %s", queryForData);
         }
@@ -156,6 +157,38 @@ public class ProductsFacade {
                     });
 
                     return new ProductPageableData(products, new PageableData(responseToken, totalRows, pageSize));
+                })
+                .subscribeOn(Schedulers.boundedElastic());
+    }
+
+    public Mono<StockPageableData> getStock(String token, int pageSize, String search) {
+        var query =
+                "SELECT t.ean,t.available FROM `marketcom-bi.marketplace.stock` as t WHERE t.createtime = (select max(t1.createtime)" +
+                        " FROM `marketcom-bi.marketplace.stock` as t1 where t1.ean = t.ean)";
+
+        if (StringUtils.isNotEmpty(search) && NumberUtils.isParsable(search)) {
+            query =
+                    String.format(query + " AND  t.ean = %s", search);
+        }
+
+        String finalQuery = query;
+        return Mono.fromCallable(() -> {
+                    TableResult rest = bigQueryClient.queryPagination(finalQuery, token, pageSize);
+
+                    var responseToken = rest.getNextPageToken();
+                    var totalRows = rest.getTotalRows();
+                    List<Product> products = new ArrayList<>();
+                    rest.getValues().forEach(i -> {
+                        var ean = getValueString.apply(i.get(0), "ean");
+                        var available = getValueString.apply(i.get(1), "available");
+
+                        Product product = new Product();
+                        product.setEan(ean);
+                        product.setStock(Integer.parseInt(available));
+                        products.add(product);
+                    });
+
+                    return new StockPageableData(products, new PageableData(responseToken, totalRows, pageSize));
                 })
                 .subscribeOn(Schedulers.boundedElastic());
     }

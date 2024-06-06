@@ -1,6 +1,7 @@
 package io.scommerce.core.inbound.aggregator.products.controller;
 
 import io.scommerce.core.inbound.aggregator.products.data.ProductPageableData;
+import io.scommerce.core.inbound.aggregator.products.data.StockPageableData;
 import io.scommerce.core.inbound.aggregator.products.facade.ProductsFacade;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -30,5 +31,12 @@ public class ProductsController {
                                                  @RequestParam(required = false, defaultValue = "100") int pageSize,
                                                  @RequestParam(required = false) String search) {
         return productsFacade.getBaseProducts(token, pageSize, search);
+    }
+
+    @GetMapping("/stock")
+    public Mono<StockPageableData> getStock(@RequestParam(required = false) String token,
+                                                   @RequestParam(required = false, defaultValue = "100") int pageSize,
+                                                   @RequestParam(required = false) String search) {
+        return productsFacade.getStock(token, pageSize, search);
     }
 }
