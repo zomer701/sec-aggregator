@@ -32,7 +32,6 @@ public class BigQueryClient {
     @Value("${biqquery.auth.file}")
     private String biqqueryAuthFile;
 
-
     public TableResult queryPagination(String query, String token, int size) throws IOException, InterruptedException {
 
         QueryJobConfiguration queryJobConfiguration = QueryJobConfiguration
