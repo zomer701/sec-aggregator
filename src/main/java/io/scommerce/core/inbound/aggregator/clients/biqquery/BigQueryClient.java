@@ -1,13 +1,7 @@
 package io.scommerce.core.inbound.aggregator.clients.biqquery;
 
 import com.google.auth.oauth2.ServiceAccountCredentials;
-import com.google.cloud.bigquery.BigQuery;
-import com.google.cloud.bigquery.BigQueryOptions;
-import com.google.cloud.bigquery.Job;
-import com.google.cloud.bigquery.JobId;
-import com.google.cloud.bigquery.JobInfo;
-import com.google.cloud.bigquery.QueryJobConfiguration;
-import com.google.cloud.bigquery.TableResult;
+import com.google.cloud.bigquery.*;
 import com.google.cloud.http.HttpTransportOptions;
 import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
